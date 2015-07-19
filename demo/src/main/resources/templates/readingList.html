@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reading List</title>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.css}" rel="stylesheet"
+          media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js" th:src="@{/webjars/jquery/3.0.0-alpha1/jquery.js}"></script>
+</head>
+<body>
+<div class="container">
+    <h2>Your Reading List </h2>
+
+    <div th:unless="${#lists.isEmpty(books)}">
+        <dl th:each="book : ${books}">
+            <dt class="bookHeadline">
+                <span th:text="${book.title}">Title</span> by
+                <span th:text="${book.author}">Author</span>
+                (ISBN: <span th:text="${book.isbn}">ISBN</span>)
+            </dt>
+            <dd class="bookDescription">
+                <span th:if="${book.description}" th:text="${book.description}">Description</span>
+                <span th:if="${book.description eq null}"> No description available</span>
+            </dd>
+        </dl>
+    </div>
+
+    <div th:if="${#lists.isEmpty(books)}">
+        <p>You have no books in your book list</p>
+    </div>
+    <hr/>
+
+    <h3>Add a book</h3>
+
+    <form class="form-horizontal" role="form" method="POST">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input class="form-control" type="text" name="title" size="50"></input><br/>
+        </div>
+        <div class="form-group">
+            <label for="author">Author:</label>
+            <input class="form-control" type="text" name="author" size="50"></input><br/>
+        </div>
+        <div class="form-group">
+            <label for="isbn">ISBN:</label>
+            <input class="form-control" type="text" name="isbn" size="15"></input><br/>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label><br/>
+            <textarea class="form-control" name="description" cols="80" rows="5"></textarea> <br/>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>
